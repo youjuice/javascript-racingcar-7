@@ -1,4 +1,4 @@
-import { Random } from "@woowacourse/mission-utils/src";
+import { Random } from "@woowacourse/mission-utils";
 import Cars from "./Cars";
 
 class Game {
