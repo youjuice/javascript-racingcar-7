@@ -13,28 +13,24 @@ class App {
   }
 
   async run() {
-    const game = await this.#initializeGame();
-    await this.#playGame(game);
-    this.#announceWinners(game);
-  }
+    try {
+      const carNames = await this.#inputView.readCarNames();
+      const attempts = await this.#inputView.readAttempts();
 
-  async #initializeGame() {
-    const carNames = await this.#inputView.readCarNames();
-    const attempts = await this.#inputView.readAttempts();
-    return new Game(carNames, attempts);
-  }
+      const game = new Game(carNames, attempts);
 
-  async #playGame(game) {
-    this.#outputView.printGameStart();
+      this.#outputView.printGameStart();
 
-    for (let i = 0; i < game.getAttempts(); i++) {
-      await game.play();
-      this.#outputView.printRoundResult(game.getCurrentPositions());
+      for (let i = 0; i < attempts; i++) {
+        await game.play();
+        this.#outputView.printRoundResult(game.getCurrentPositions());
+      }
+
+      this.#outputView.printWinners(game.getWinners());
+    } catch (error) {
+      Console.print(error.message);
+      throw error;
     }
-  }
-
-  #announceWinners(game) {
-    this.#outputView.printWinners(game.getWinners());
   }
 }
 
