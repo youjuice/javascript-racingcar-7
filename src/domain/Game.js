@@ -34,6 +34,10 @@ class Game {
         return this.#cars.findWinners();
     }
 
+    getAttempts() {
+        return this.#attempts;
+    }
+
     getCurrentPositions() {
         return this.#cars.getCarPositions();
     }
